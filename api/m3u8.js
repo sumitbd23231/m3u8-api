@@ -1,4 +1,4 @@
-const chromium = require('chrome-aws-lambda');
+const { chromium } = require('playwright-chromium');
 
 module.exports = async (req, res) => {
   const imdbId = req.query.id;
@@ -7,36 +7,25 @@ module.exports = async (req, res) => {
   }
 
   const url = `https://godriveplayer.com/player.php?imdb=${imdbId}`;
-  let browser = null;
+  let browser;
 
   try {
-    const executablePath = await chromium.executablePath;
-
-    if (!executablePath) {
-      return res.status(500).json({ error: 'Chromium executable not found in Vercel environment' });
-    }
-
-    browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      executablePath,
-      defaultViewport: chromium.defaultViewport,
+    browser = await chromium.launch({
       headless: true
     });
 
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
-
     let m3u8Url = null;
 
-    page.on('response', async response => {
+    page.on('response', async (response) => {
       const resUrl = response.url();
       if (resUrl.includes('.m3u8')) {
         m3u8Url = resUrl;
       }
     });
 
-    await page.waitForTimeout(7000); // wait a bit longer
-
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(7000);
     await browser.close();
 
     if (m3u8Url) {
@@ -46,6 +35,6 @@ module.exports = async (req, res) => {
     }
   } catch (err) {
     if (browser) await browser.close();
-    return res.status(500).json({ error: `Error: ${err.message}` });
+    return res.status(500).json({ error: err.message });
   }
 };
