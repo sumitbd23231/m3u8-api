@@ -1,0 +1,12 @@
+{
+  "name": "godrive-m3u8-api",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "vercel-build": "npm install --legacy-peer-deps"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer-core": "^10.4.0"
+  }
+}

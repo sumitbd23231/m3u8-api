@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "functions": {
+    "api/m3u8.js": {
+      "memory": 512,
+      "maxDuration": 10
+    }
+  }
+}
