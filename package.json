@@ -6,7 +6,6 @@
     "vercel-build": "npm install --legacy-peer-deps"
   },
   "dependencies": {
-    "chrome-aws-lambda": "^10.1.0",
-    "puppeteer-core": "^10.4.0"
+    "playwright-chromium": "^1.44.0"
   }
 }
