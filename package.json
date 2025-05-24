@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "vercel-build": "npm install --legacy-peer-deps"
+    "vercel-build": "npx playwright install chromium"
   },
   "dependencies": {
-    "playwright-chromium": "^1.44.0"
+    "@playwright/test": "^1.44.0"
   }
 }
