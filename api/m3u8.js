@@ -1,4 +1,4 @@
-const { chromium } = require('playwright-chromium');
+const { chromium } = require('@playwright/test');
 
 module.exports = async (req, res) => {
   const imdbId = req.query.id;
@@ -14,7 +14,8 @@ module.exports = async (req, res) => {
       headless: true
     });
 
-    const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
     let m3u8Url = null;
 
     page.on('response', async (response) => {
